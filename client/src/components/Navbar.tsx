@@ -6,15 +6,16 @@ const Navbar = () => {
   const [ loginCheck, setLoginCheck ] = useState(false);
 
   const checkLogin = () => {
-    if(auth.loggedIn()) {
+    if (auth.loggedIn()) {
       setLoginCheck(true);
+    } else {
+      setLoginCheck(false);
     }
   };
 
   useEffect(() => {
-    console.log(loginCheck);
     checkLogin();
-  }, [loginCheck])
+  }, [])
 
   return (
     <div className='nav'>

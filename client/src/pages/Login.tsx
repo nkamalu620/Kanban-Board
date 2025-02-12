@@ -21,6 +21,7 @@ const Login = () => {
     try {
       const data = await login(loginData);
       Auth.login(data.token);
+    history.push('/kanban');
     } catch (err) {
       console.error('Failed to login', err);
     }

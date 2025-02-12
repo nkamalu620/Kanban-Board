@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
+import KanbanBoard from './pages/KanbanBoard';
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route path='/login' component={Login} />
-        {/* Add other routes here */}
+        <Route path='/kanban' component={KanbanBoard} />
       </Switch>
     </Router>
   );

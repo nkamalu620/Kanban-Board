@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router-dom';
-
 import Navbar from './components/Navbar';
+import Login from './pages/Login';
 
 function App() {
 
   return (
-    <div className='container'>
+    <Router>
       <Navbar />
-      <main>
-        <Outlet />
-      </main>
-    </div>
-  )
-}
-
+      <Switch>
+        <Route path='/login' component={Login} />
+        {/* Add other routes here */}
+      </Switch>
+    </Router>
+  );
+};
 export default App

@@ -1,6 +1,7 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -8,6 +9,9 @@ const Login = () => {
     password: ''
   });
 
+  const [error, setError] = useState('');
+  const history = useHistory();
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setLoginData({

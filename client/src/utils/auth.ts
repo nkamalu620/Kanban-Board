@@ -1,10 +1,12 @@
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 
+
 class AuthService {
   getProfile() {
     const token = localStorage.getItem('token');
     if (!token) {
       throw new Error('No token found');
+      return false;
     }
     const decodedToken = jwtDecode(token);
     return decodedToken;
@@ -14,8 +16,12 @@ class AuthService {
     const token = this.getToken();
     return !!token && !this.isTokenExpired(token);
   }
+  getToken(): string {
+    // TODO: return the token
+    const loggedUser = localStorage.getItem('id_token') || '';
+    return loggedUser;
+  }
 
-  
   isTokenExpired(token: string) {
     // TODO: return a value that indicates if the token is expired
     try {
@@ -33,12 +39,6 @@ class AuthService {
     }
   }
 
-  getToken(): string {
-    // TODO: return the token
-    const loggedUser = localStorage.getItem('id_token') || '';
-    return loggedUser;
-
-
   login(idToken: string) {
     // TODO: set the token to localStorage
     // TODO: redirect to the home page
@@ -55,3 +55,4 @@ class AuthService {
 }
 
 export default new AuthService();
+

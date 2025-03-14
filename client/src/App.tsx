@@ -1,8 +1,8 @@
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import KanbanBoard from './pages/Board';
-import { Router } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+
 
 function App() {
 

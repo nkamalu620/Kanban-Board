@@ -11,63 +11,46 @@ class AuthService {
   }
 
   loggedIn() {
-    // TODO: return a value that indicates if the user is logged in
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return false;
-    }
-  
-    try {
-      const decodedToken = jwtDecode(token);
-      // Optionally, you can check if the token is expired
-      const currentTime = Date.now() / 1000;
-      if (decodedToken.exp && decodedToken.exp < currentTime) {
-        return false;
-      }
-      return true;
-    } catch (error) {
-      return false;
-    }
+    const token = this.getToken();
+    return !!token && !this.isTokenExpired(token);
   }
 
   
   isTokenExpired(token: string) {
     // TODO: return a value that indicates if the token is expired
-    if (!token) {
-      return true; // No token means it's considered expired
-    }
-  
     try {
-      const decodedToken: { exp: number } = jwtDecode(token);
-      const currentTime = Date.now() / 1000;
-      return decodedToken.exp < currentTime;
-    } catch (error) {
-      return true; // If there's an error decoding, consider the token expired
+      // Attempt to decode the provided token using jwtDecode, expecting a JwtPayload type.
+      const decoded = jwtDecode<JwtPayload>(token);
+
+      // Check if the decoded token has an 'exp' (expiration) property and if it is less than the current time in seconds.
+      if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
+        // If the token is expired, return true indicating that it is expired.
+        return true;
+      }
+    } catch (err) {
+      // If decoding fails (e.g., due to an invalid token format), catch the error and return false.
+      return false;
     }
   }
 
   getToken(): string {
     // TODO: return the token
-  const token = localStorage.getItem('token');
-  if (!token) {
-    throw new Error('No token found');
-  }
-  return token;
-  }
+    const loggedUser = localStorage.getItem('id_token') || '';
+    return loggedUser;
 
 
   login(idToken: string) {
     // TODO: set the token to localStorage
-   localStorage.setItem('token', idToken)
     // TODO: redirect to the home page
-    window.location.href = '/';
+    localStorage.setItem('id_token', idToken);
+    window.location.assign('/');
   }
 
   logout() {
     // TODO: remove the token from localStorage
     localStorage.removeItem('token');
     // TODO: redirect to the login page
-    window.location.href = '/login';
+    window.location.assign('/');
   }
 }
 
